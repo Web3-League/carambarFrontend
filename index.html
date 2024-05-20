@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Blague Aléatoire</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Blague Aléatoire</h1>
+    <button id="fetchJoke">Afficher une blague</button>
+    <p id="jokeContent"></p>
+    <p id="jokeAnswer" style="font-weight: bold;"></p>
+
+    <script>
+        $(document).ready(function() {
+            $('#fetchJoke').click(function() {
+                $.ajax({
+                    url: 'https://carambarapi.onrender.com/api/blagues/hasard/random',
+                    type: 'GET',
+                    success: function(result) {
+                        if (result.blague && result.reponse) {
+                            $('#jokeContent').text(result.blague);
+                            $('#jokeAnswer').text(result.reponse);
+                        } else {
+                            $('#jokeContent').text("Blague non trouvée.");
+                            $('#jokeAnswer').empty();
+                        }
+                    },
+                    error: function(error) {
+                        $('#jokeContent').text("Erreur lors de la récupération de la blague.");
+                        $('#jokeAnswer').empty();
+                        console.error('Erreur AJAX:', error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
